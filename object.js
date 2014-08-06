@@ -270,14 +270,31 @@
   };
 
   // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isRegExp.
+  /****************************
+  *增加多种类型数据的判断方法
+  *
+  *通过toString()方法
+  *@return {Boolean} 返回一个booble值
+  *
+  *****************************/
   _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp'], function(name) {
     _['is' + name] = function(obj) {
       return toString.call(obj) === '[object ' + name + ']';
     };
   });
 
+
   // Define a fallback version of the method in browsers (ahem, IE), where
   // there isn't any inspectable "Arguments" type.
+  /****************************
+  *增加Arguments类型数据的判断方法
+  *
+  *Arguments 是一个类数组的对象
+  *通过判断是否有callee属性，来进行参数判断
+  *callee:返回正被执行的 Function 对象，即指定的 Function 对象的正文。
+  *@return {Boolean} 返回一个booble值
+  *
+  *****************************/
   if (!_.isArguments(arguments)) {
     _.isArguments = function(obj) {
       return _.has(obj, 'callee');
@@ -285,6 +302,12 @@
   }
 
   // Optimize `isFunction` if appropriate.
+  /****************************
+  *增加Function类型数据的判断方法
+  *
+  *@return {Boolean} 返回一个booble值
+  *
+  *****************************/
   if (typeof /./ !== 'function') {
     _.isFunction = function(obj) {
       return typeof obj === 'function';
@@ -292,29 +315,71 @@
   }
 
   // Is a given object a finite number?
+   /****************************
+  *判断一个数是否是有限数
+  *
+  *parseFloat 是全局函数，不属于任何对象。
+  *
+  *@return {Boolean} 返回一个booble值
+  *
+  *****************************/
   _.isFinite = function(obj) {
     return isFinite(obj) && !isNaN(parseFloat(obj));
   };
 
+
   // Is the given value `NaN`? (NaN is the only number which does not equal itself).
+  /****************************
+  *判断传入的参数是否是NaN类型
+  *NaN是唯一的一个不等于它自身的数
+  *
+  *@return {Boolean} 返回一个booble值
+  *
+  *****************************/
   _.isNaN = function(obj) {
+    //obj !== +obj ,使得更容易理解一些
     return _.isNumber(obj) && obj !== +obj;
   };
 
+
   // Is a given value a boolean?
+  /****************************
+  *判断传入的参数是否是Boolean类型
+  *
+  *@return {Boolean} 返回一个booble值
+  *
+  *****************************/
   _.isBoolean = function(obj) {
+    //三种判断方法
+    //第三种判断条件是否多余的？
     return obj === true || obj === false || toString.call(obj) === '[object Boolean]';
   };
 
+
   // Is a given value equal to null?
+  /****************************
+  *判断传入的参数是否是null
+  *
+  *@return {Boolean} 返回一个booble值
+  *
+  *****************************/
   _.isNull = function(obj) {
     return obj === null;
   };
 
+
   // Is a given variable undefined?
+  /****************************
+  *判断传入的参数是否是undefined
+  *用void 0 来进行判断
+  *
+  *@return {Boolean} 返回一个booble值
+  *
+  *****************************/
   _.isUndefined = function(obj) {
     return obj === void 0;
   };
+
 
   // Shortcut function for checking if an object has a given property directly
   // on itself (in other words, not on a prototype).
