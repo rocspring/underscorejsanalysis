@@ -71,9 +71,16 @@
   // Internal function that returns an efficient (for current engines) version
   // of the passed-in callback, to be repeatedly applied in other Underscore
   // functions.
-  //这是一个内部的函数。
-  //content === undefined时，返回函数
-  //void 0 是 undefined ；不太清楚这里为什么要这样写。
+  /********************************
+  * 这是一个内部的函数。
+  * context === undefined时，返回函数
+  * void 0 是 undefined ；不太清楚这里为什么要这样写。
+  * @param {Function} func : 回调函数
+  * @param {Object} context : 指定回调函数执行的作用域,为undefined 时，返回回调函数的引用
+  * @param {Number} argCont : 指定执行回调函数时传入的参数，这个参数不传的时候，默认为3个
+  *
+  * 这个函数构建一个对回调函数的引用
+  ********************************/
   var createCallback = function(func, context, argCount) {
     if (context === void 0) return func;
     switch (argCount == null ? 3 : argCount) {
