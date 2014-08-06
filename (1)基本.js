@@ -102,4 +102,20 @@
     };
   };
 
-
+  // A mostly-internal function to generate callbacks that can be applied
+  // to each element in a collection, returning the desired result — either
+  // identity, an arbitrary callback, a property matcher, or a property accessor.
+  /********************************
+  * 这是一个重要的内部函数。
+  * 根据传入参数value的类型，返回不同结果。
+  * 当value为null时，返回underscore对象的indentity属性；
+  * 当value是一个函数时，返回一个函数的引用
+  * 当value是一个对象时，返回underscore对象matches方法引用
+  * 当value是其他类型时，返回underscore对象的property方法引用
+  ********************************/
+  _.iteratee = function(value, context, argCount) {
+    if (value == null) return _.identity;
+    if (_.isFunction(value)) return createCallback(value, context, argCount);
+    if (_.isObject(value)) return _.matches(value);
+    return _.property(value);
+  };
