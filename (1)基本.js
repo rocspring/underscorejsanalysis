@@ -22,7 +22,7 @@
   var ArrayProto = Array.prototype, ObjProto = Object.prototype, FuncProto = Function.prototype;
 
   // Create quick reference variables for speed access to core prototypes.
-  //
+  //对js的一些常用的原生方法，创建快速的访问变量，方便经常的调用
   var
 		push             = ArrayProto.push,
 		slice            = ArrayProto.slice,
@@ -32,12 +32,18 @@
 
   // All **ECMAScript 5** native function implementations that we hope to use
   // are declared here.
+  //把希望使用ECMAScript 5 的原生方法，保存起来。
+  //这些方法是新加的方法，一些浏览器可能不支持的
+  //如果支持的浏览器，则用原生的方法。
   var
     nativeIsArray      = Array.isArray,
     nativeKeys         = Object.keys,
     nativeBind         = FuncProto.bind;
 
   // Create a safe reference to the Underscore object for use below.
+  //_()是一个underscore对象的构造函数，目的是为了创建一个新的underscore对象
+  //如果传入的obj不是underscore对象，则会一层层的向上递归，直到this是一个underscore对象，
+  //构建一个underscore对象，同时把obj赋值给这个对象的_wrapped属性
   var _ = function(obj) {
     if (obj instanceof _) return obj;
     if (!(this instanceof _)) return new _(obj);
@@ -47,6 +53,8 @@
   // Export the Underscore object for **Node.js**, with
   // backwards-compatibility for the old `require()` API. If we're in
   // the browser, add `_` as a global object.
+  //在node.js环境中，如果存在module，则把_赋值给exports；否则，把_声明为exports的一个参数。
+  //在浏览器环境中，把_声明为一个全局变量。
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
       exports = module.exports = _;
@@ -57,6 +65,34 @@
   }
 
   // Current version.
+  //当前underscore的版本
   _.VERSION = '1.6.0';
+
+  // Internal function that returns an efficient (for current engines) version
+  // of the passed-in callback, to be repeatedly applied in other Underscore
+  // functions.
+  //这是一个内部的函数。
+  //content === undefined时，返回函数
+  //void 0 是 undefined ；不太清楚这里为什么要这样写。
+  var createCallback = function(func, context, argCount) {
+    if (context === void 0) return func;
+    switch (argCount == null ? 3 : argCount) {
+      case 1: return function(value) {
+        return func.call(context, value);
+      };
+      case 2: return function(value, other) {
+        return func.call(context, value, other);
+      };
+      case 3: return function(value, index, collection) {
+        return func.call(context, value, index, collection);
+      };
+      case 4: return function(accumulator, value, index, collection) {
+        return func.call(context, accumulator, value, index, collection);
+      };
+    }
+    return function() {
+      return func.apply(context, arguments);
+    };
+  };
 
 
