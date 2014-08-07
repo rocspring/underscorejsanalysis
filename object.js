@@ -5,7 +5,7 @@
   // Retrieve the names of an object's properties.
   // Delegates to **ECMAScript 5**'s native `Object.keys`
   /****************************
-  *返回一个对象的所有键值组成的一个数组
+  *返回一个对象的所有属性组成的一个数组
   *只返回对象本身的属性，不返回原型链中的属性
   *@param {Object} obj:传入的对象
   *@rturn {Array} 返回值是一个数组 
@@ -23,6 +23,13 @@
   };
 
   // Retrieve the values of an object's properties.
+  /****************************
+  *返回一个对象的所有属性的值组成的一个数组
+  *
+  *@param {Object} obj:传入的对象
+  *@rturn {Array} 返回值是一个数组 
+  *
+  *****************************/
   _.values = function(obj) {
     var keys = _.keys(obj);
     var length = keys.length;
@@ -34,6 +41,13 @@
   };
 
   // Convert an object into a list of `[key, value]` pairs.
+  /****************************
+  *返回一个对象的所有属性和对应的值组成的一个数组
+  *
+  *@param {Object} obj:传入的对象
+  *@rturn {Array} 返回值是一个二维数组 
+  *
+  *****************************/
   _.pairs = function(obj) {
     var keys = _.keys(obj);
     var length = keys.length;
@@ -45,6 +59,13 @@
   };
 
   // Invert the keys and values of an object. The values must be serializable.
+ /****************************
+  *反转一个对象的所有属性和对应的值
+  *
+  *@param {Object} obj:传入的对象
+  *@rturn {Array} 返回值是一个对象，对象的属性名和属性值进行了反转
+  *
+  *****************************/
   _.invert = function(obj) {
     var result = {};
     var keys = _.keys(obj);
@@ -56,6 +77,13 @@
 
   // Return a sorted list of the function names available on the object.
   // Aliased as `methods`
+ /****************************
+  *返回一个数组，数组的值是对象中为函数的属性，按照对象属性名进行排序的
+  *
+  *@param {Object} obj:传入的对象
+  *@rturn {Array} 返回值是一个对象
+  *
+  *****************************/
   _.functions = _.methods = function(obj) {
     var names = [];
     for (var key in obj) {
@@ -65,6 +93,14 @@
   };
 
   // Extend a given object with all the properties in passed-in object(s).
+ /****************************
+  *
+  *重要函数，继承的实现
+  *可以传入多个参数，第一个参数是准备继承的对象
+  *@param {Object} obj:准备继承别的对象的对象
+  *@rturn {Array} 返回值是继承过后的对象
+  *
+  *****************************/
   _.extend = function(obj) {
     if (!_.isObject(obj)) return obj;
     var source, prop;
@@ -80,6 +116,15 @@
   };
 
   // Return a copy of the object only containing the whitelisted properties.
+    /****************************
+    *返回对一个对象的copy
+    *
+    *第二个参数是函数时，按照函数的规则，copy对象的属性
+    *第二个参数不是函数时，则传入的是属性名称，只复制这些对象的这些属性
+    *@param {Object} obj:传入的对象
+    *@return {Array} 返回值是copy的对象
+    *
+    *****************************/
   _.pick = function(obj, iteratee, context) {
     var result = {}, key;
     if (obj == null) return result;
@@ -114,6 +159,11 @@
   };
 
   // Fill in a given object with default properties.
+  /**************************
+  *给一个对象添加没有的属性
+  *
+  *
+  ***************************/
   _.defaults = function(obj) {
     if (!_.isObject(obj)) return obj;
     for (var i = 1, length = arguments.length; i < length; i++) {
@@ -126,6 +176,12 @@
   };
 
   // Create a (shallow-cloned) duplicate of an object.
+  /**************************
+  *克隆一个对象
+  *如果是数组，返回数组
+  *如果是对象了，进行克隆
+  *是浅克隆
+  ***************************/
   _.clone = function(obj) {
     if (!_.isObject(obj)) return obj;
     return _.isArray(obj) ? obj.slice() : _.extend({}, obj);
@@ -236,6 +292,14 @@
 
   // Is a given array, string, or object empty?
   // An "empty" object has no enumerable own-properties.
+     /****************************
+  *判断传入的对象是否为空
+  *首先判断是否为null,
+  *然后判断是否为数组、字符串、函数的参数列表
+  *最后判断是否有自身的属性
+  *
+  *@return {Boolean} 返回一个booble值
+  *****************************/
   _.isEmpty = function(obj) {
     if (obj == null) return true;
     if (_.isArray(obj) || _.isString(obj) || _.isArguments(obj)) return obj.length === 0;
@@ -244,12 +308,24 @@
   };
 
   // Is a given value a DOM element?
+   /****************************
+  *判断传入的参数是否是一个DOM对象
+  *
+  *@return {Boolean} 返回一个booble值
+  *
+  *****************************/
   _.isElement = function(obj) {
     return !!(obj && obj.nodeType === 1);
   };
 
   // Is a given value an array?
   // Delegates to ECMA5's native Array.isArray
+   /****************************
+  *判断传入的参数是否是一个数组
+  *@return {Boolean} 返回一个booble值
+  *
+  * 首先使用ECMA5的原生方法进行判断
+  *****************************/
   _.isArray = nativeIsArray || function(obj) {
     return toString.call(obj) === '[object Array]';
   };
