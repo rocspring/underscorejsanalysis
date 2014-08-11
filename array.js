@@ -4,6 +4,10 @@
   // Get the first element of an array. Passing **n** will return the first N
   // values in the array. Aliased as `head` and `take`. The **guard** check
   // allows it to work with `_.map`.
+  /*
+  *返回第一个元素
+  *
+  **/
   _.first = _.head = _.take = function(array, n, guard) {
     if (array == null) return void 0;
     if (n == null || guard) return array[0];
@@ -15,12 +19,21 @@
   // the arguments object. Passing **n** will return all the values in
   // the array, excluding the last N. The **guard** check allows it to work with
   // `_.map`.
+  /*
+  *返回第一个元素
+  *
+  **/
   _.initial = function(array, n, guard) {
     return slice.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
   };
 
   // Get the last element of an array. Passing **n** will return the last N
   // values in the array. The **guard** check allows it to work with `_.map`.
+  /*
+  *返回数组最后一个元素
+  *如果传入第二个参数n,则返回最后n个元素
+  *@return {Array} 返回的是一个数组
+  **/
   _.last = function(array, n, guard) {
     if (array == null) return void 0;
     if (n == null || guard) return array[array.length - 1];
@@ -31,11 +44,19 @@
   // Especially useful on the arguments object. Passing an **n** will return
   // the rest N values in the array. The **guard**
   // check allows it to work with `_.map`.
+  /*
+  *返回数组除了第一个元素外的其他元素
+  *如果传入第二个参数n,则返回除去前n个元素之外的元素
+  *@return {Array} 返回的是一个数组
+  **/
   _.rest = _.tail = _.drop = function(array, n, guard) {
     return slice.call(array, n == null || guard ? 1 : n);
   };
 
   // Trim out all falsy values from an array.
+  /*
+  *_.filter函数的意义？
+  **/
   _.compact = function(array) {
     return _.filter(array, _.identity);
   };
@@ -64,6 +85,10 @@
   };
 
   // Return a version of the array that does not contain the specified value(s).
+  /*
+  *删除数组中的某些元素
+  *
+  **/
   _.without = function(array) {
     return _.difference(array, slice.call(arguments, 1));
   };
@@ -124,6 +149,9 @@
 
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
+  /*
+  *
+  **/
   _.difference = function(array) {
     var rest = flatten(slice.call(arguments, 1), true, true, []);
     return _.filter(array, function(value){
@@ -133,6 +161,10 @@
 
   // Zip together multiple lists into a single array -- elements that share
   // an index go together.
+  /*
+  * 
+  *_.pluck是什么意思呢？
+  **/
   _.zip = function(array) {
     if (array == null) return [];
     var length = _.max(arguments, 'length').length;
@@ -146,6 +178,12 @@
   // Converts lists into objects. Pass either a single array of `[key, value]`
   // pairs, or two parallel arrays of the same length -- one of keys, and one of
   // the corresponding values.
+  /*
+  *返回一个对象，属性和值分别对应list和values
+  *如果values存在，则list和value一一对应
+  *如果values不存在，则list至少是二维数组，一一一一对象
+  @return {Object} 返回一个对象
+  **/
   _.object = function(list, values) {
     if (list == null) return {};
     var result = {};
@@ -163,6 +201,10 @@
   // or -1 if the item is not included in the array.
   // If the array is large and already in sort order, pass `true`
   // for **isSorted** to use binary search.
+  /*
+  *返回数组中第一个某个元素的下标，如果没有这个元素，返回-1
+  *
+  **/
   _.indexOf = function(array, item, isSorted) {
     if (array == null) return -1;
     var i = 0, length = array.length;
@@ -178,6 +220,10 @@
     return -1;
   };
 
+    /*
+    *返回数组中，最后一个某个元素的下标，如果不含这个元素，返回-1
+    *
+    **/
   _.lastIndexOf = function(array, item, from) {
     if (array == null) return -1;
     var idx = array.length;
@@ -191,6 +237,10 @@
   // Generate an integer Array containing an arithmetic progression. A port of
   // the native Python `range()` function. See
   // [the Python documentation](http://docs.python.org/library/functions.html#range).
+  /*
+  *获取数组从start到stop的参数，每隔step个元素获取一个
+  *@return {Array} 返回一个新的数组
+  **/
   _.range = function(start, stop, step) {
     if (arguments.length <= 1) {
       stop = start || 0;
