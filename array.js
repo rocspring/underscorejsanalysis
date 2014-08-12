@@ -136,6 +136,9 @@
 
   // Produce an array that contains every item shared between all the
   // passed-in arrays.
+  /*
+  *返回一个数组，这个数组的是传入的所有参数，都包含的参数
+  **/
   _.intersection = function(array) {
     if (array == null) return [];
     var result = [];

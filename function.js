@@ -1,12 +1,18 @@
   // Function (ahem) Functions
   // ------------------
+  /**函数对象的方法**/
 
   // Reusable constructor function for prototype setting.
+  //构建一个空函数，目的是保存初始函数的原型对象(prototype)
   var Ctor = function(){};
 
   // Create a function bound to a given object (assigning `this`, and arguments,
   // optionally). Delegates to **ECMAScript 5**'s native `Function.bind` if
   // available.
+  /*
+  *指定函数的运行作用域的方法，如果存在原生的bind方法，则调用原生的方法
+  *
+  **/
   _.bind = function(func, context) {
     var args, bound;
     if (nativeBind && func.bind === nativeBind) return nativeBind.apply(func, slice.call(arguments, 1));
@@ -27,6 +33,10 @@
   // Partially apply a function by creating a version that has had some of its
   // arguments pre-filled, without changing its dynamic `this` context. _ acts
   // as a placeholder, allowing any combination of arguments to be pre-filled.
+  /*
+  *
+  *
+  **/
   _.partial = function(func) {
     var boundArgs = slice.call(arguments, 1);
     return function() {
@@ -43,6 +53,11 @@
   // Bind a number of an object's methods to that object. Remaining arguments
   // are the method names to be bound. Useful for ensuring that all callbacks
   // defined on an object belong to it.
+  /*
+  *把一个对象上的指定方法绑定到这个对象上
+  *@parma {Object} obj: 
+  *确保在对象中定义的callback作用域仍然是它自己。
+  **/
   _.bindAll = function(obj) {
     var i, length = arguments.length, key;
     if (length <= 1) throw new Error('bindAll must be passed function names');
