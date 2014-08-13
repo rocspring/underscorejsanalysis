@@ -146,6 +146,13 @@
   };
 
    // Return a copy of the object without the blacklisted properties.
+   /**********************
+   *TODO
+   *先放一放，其中的一些方法不知道什么含义
+   *
+   *
+   *
+   ************************/
   _.omit = function(obj, iteratee, context) {
     if (_.isFunction(iteratee)) {
       iteratee = _.negate(iteratee);
@@ -190,12 +197,22 @@
   // Invokes interceptor with the obj, and then returns obj.
   // The primary purpose of this method is to "tap into" a method chain, in
   // order to perform operations on intermediate results within the chain.
+  /*********************
+  *主要进行链式操作的
+  *传入一个对象和以这个对象为参数的函数
+  *返回对对象进行操作的过后的对象
+  *
+  *********************/
   _.tap = function(obj, interceptor) {
     interceptor(obj);
     return obj;
   };
 
   // Internal recursive comparison function for `isEqual`.
+  /***********************
+  *
+  *
+  ************************/
   var eq = function(a, b, aStack, bStack) {
     // Identical objects are equal. `0 === -0`, but they aren't identical.
     // See the [Harmony `egal` proposal](http://wiki.ecmascript.org/doku.php?id=harmony:egal).
