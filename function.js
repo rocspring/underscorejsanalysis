@@ -19,11 +19,14 @@
     if (!_.isFunction(func)) throw new TypeError('Bind must be called on a function');
     args = slice.call(arguments, 2);
     bound = function() {
+      //如果this不是bound的实例
       if (!(this instanceof bound)) return func.apply(context, args.concat(slice.call(arguments)));
       Ctor.prototype = func.prototype;
       var self = new Ctor;
       Ctor.prototype = null;
       var result = func.apply(self, args.concat(slice.call(arguments)));
+      //如果传入的函数有返回结果，返回结果
+      //否则返回一个继承函数原型的对象
       if (_.isObject(result)) return result;
       return self;
     };
@@ -34,7 +37,7 @@
   // arguments pre-filled, without changing its dynamic `this` context. _ acts
   // as a placeholder, allowing any combination of arguments to be pre-filled.
   /*
-  *
+  *返回一个函数和它的参数
   *
   **/
   _.partial = function(func) {
@@ -69,6 +72,11 @@
   };
 
   // Memoize an expensive function by storing its results.
+  /*
+  *返回一个函数的执行结果，返回的是一个对象
+  *@param: {Function} func:
+  *@param: {Function} hasher:
+  **/
   _.memoize = function(func, hasher) {
     var memoize = function(key) {
       var cache = memoize.cache;
@@ -82,6 +90,10 @@
 
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
+  /*
+  *延迟指定的事件，执行一个函数
+  *从第三个参数开始，是执行函数的参数
+  **/
   _.delay = function(func, wait) {
     var args = slice.call(arguments, 2);
     return setTimeout(function(){
@@ -91,6 +103,9 @@
 
   // Defers a function, scheduling it to run after the current call stack has
   // cleared.
+  /*
+  *延迟1ms执行函数
+  **/
   _.defer = function(func) {
     return _.delay.apply(_, [func, 1].concat(slice.call(arguments, 1)));
   };
@@ -100,6 +115,10 @@
   // as much as it can, without ever going more than once per `wait` duration;
   // but if you'd like to disable the execution on the leading edge, pass
   // `{leading: false}`. To disable execution on the trailing edge, ditto.
+  /*
+  *指定频繁执行的函数的执行频率，在指定的时间内只执行一次
+  *
+  **/
   _.throttle = function(func, wait, options) {
     var context, args, result;
     var timeout = null;
@@ -134,6 +153,11 @@
   // be triggered. The function will be called after it stops being called for
   // N milliseconds. If `immediate` is passed, trigger the function on the
   // leading edge, instead of the trailing.
+  /*
+  *函数两次调用的时间小于wait时间时，不会不执行
+  *直到，两次调用函数的时间间隔大于wait时，才会被执行
+  *
+  **/
   _.debounce = function(func, wait, immediate) {
     var timeout, args, context, timestamp, result;
 
@@ -169,11 +193,18 @@
   // Returns the first function passed as an argument to the second,
   // allowing you to adjust arguments, run code before and after, and
   // conditionally execute the original function.
+  /*
+  *第一个函数参数会被当作参数传给第二行函数参数
+  *
+  **/
   _.wrap = function(func, wrapper) {
     return _.partial(wrapper, func);
   };
 
   // Returns a negated version of the passed-in predicate.
+  /*
+  *返回一个函数的运行结果的boolean值判断
+  **/
   _.negate = function(predicate) {
     return function() {
       return !predicate.apply(this, arguments);
@@ -182,6 +213,10 @@
 
   // Returns a function that is the composition of a list of functions, each
   // consuming the return value of the function that follows.
+  /*
+  *传入多个函数参数，后一个函数的返回值，作为前一个函数的参数继续执行
+  *
+  **/
   _.compose = function() {
     var args = arguments;
     var start = args.length - 1;
@@ -194,6 +229,9 @@
   };
 
   // Returns a function that will only be executed after being called N times.
+  /*
+  *多次调用这个函数时，执行传入的函数
+  **/
   _.after = function(times, func) {
     return function() {
       if (--times < 1) {
@@ -203,6 +241,9 @@
   };
 
   // Returns a function that will only be executed before being called N times.
+  /*
+  *每次调用这个函数，都执行传入的函数参数，直到调用times次
+  **/
   _.before = function(times, func) {
     var memo;
     return function() {
@@ -216,4 +257,7 @@
 
   // Returns a function that will be executed at most one time, no matter how
   // often you call it. Useful for lazy initialization.
+  /*
+  *传入一个函数，这个函数只会被执行一次
+  */
   _.once = _.partial(_.before, 2);
