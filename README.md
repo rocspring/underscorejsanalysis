@@ -24,5 +24,10 @@ function增加方法的分析
 * chainling.js
 
 
+* cllection.js
 
+
+* template.js
+
+模板方法
 
