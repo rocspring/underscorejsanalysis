@@ -22,6 +22,10 @@
   };
 
   // Return the results of applying the iteratee to each element.
+  /*
+  *对一个对象的所有属性，经过一个函数进行计算
+  *@return {Object} 处理过后的对象
+  **/
   _.map = _.collect = function(obj, iteratee, context) {
     if (obj == null) return [];
     iteratee = _.iteratee(iteratee, context);
@@ -76,6 +80,9 @@
   };
 
   // Return the first value which passes a truth test. Aliased as `detect`.
+  /*
+  *返回对象的第一符合过滤函数的属性
+  **/
   _.find = _.detect = function(obj, predicate, context) {
     var result;
     predicate = _.iteratee(predicate, context);
@@ -90,6 +97,9 @@
 
   // Return all the elements that pass a truth test.
   // Aliased as `select`.
+  /*
+  *返回对象的所有符合过滤函数的属性
+  **/
   _.filter = _.select = function(obj, predicate, context) {
     var results = [];
     if (obj == null) return results;
@@ -101,12 +111,18 @@
   };
 
   // Return all the elements for which a truth test fails.
+  /*
+  *返回对象的所有的不符合过滤函数的属性
+  **/
   _.reject = function(obj, predicate, context) {
     return _.filter(obj, _.negate(_.iteratee(predicate)), context);
   };
 
   // Determine whether all of the elements match a truth test.
   // Aliased as `all`.
+  /*
+  *判断是否对象的所有符合过滤函数
+  **/
   _.every = _.all = function(obj, predicate, context) {
     if (obj == null) return true;
     predicate = _.iteratee(predicate, context);
@@ -122,6 +138,9 @@
 
   // Determine if at least one element in the object matches a truth test.
   // Aliased as `any`.
+  /*
+  *判断是否对象的部分符合过滤函数
+  **/
   _.some = _.any = function(obj, predicate, context) {
     if (obj == null) return false;
     predicate = _.iteratee(predicate, context);
@@ -137,6 +156,9 @@
 
   // Determine if the array or object contains a given value (using `===`).
   // Aliased as `include`.
+  /*
+  *判断一个对象或者数组是否含有目标属性
+  **/
   _.contains = _.include = function(obj, target) {
     if (obj == null) return false;
     if (obj.length !== +obj.length) obj = _.values(obj);
@@ -144,6 +166,9 @@
   };
 
   // Invoke a method (with arguments) on every item in a collection.
+  /*
+  *
+  **/
   _.invoke = function(obj, method) {
     var args = slice.call(arguments, 2);
     var isFunc = _.isFunction(method);
@@ -153,23 +178,35 @@
   };
 
   // Convenience version of a common use case of `map`: fetching a property.
+  /*
+  *
+  **/
   _.pluck = function(obj, key) {
     return _.map(obj, _.property(key));
   };
 
   // Convenience version of a common use case of `filter`: selecting only objects
   // containing specific `key:value` pairs.
+  /*
+  *
+  **/
   _.where = function(obj, attrs) {
     return _.filter(obj, _.matches(attrs));
   };
 
   // Convenience version of a common use case of `find`: getting the first object
   // containing specific `key:value` pairs.
+  /*
+  *
+  **/
   _.findWhere = function(obj, attrs) {
     return _.find(obj, _.matches(attrs));
   };
 
   // Return the maximum element (or element-based computation).
+  /*
+  *返回对象的属性经过处理的最大值
+  **/
   _.max = function(obj, iteratee, context) {
     var result = -Infinity, lastComputed = -Infinity,
         value, computed;
@@ -195,6 +232,9 @@
   };
 
   // Return the minimum element (or element-based computation).
+  /*
+  *返回对象的属性经过处理的最小值
+  **/
   _.min = function(obj, iteratee, context) {
     var result = Infinity, lastComputed = Infinity,
         value, computed;
@@ -221,6 +261,9 @@
 
   // Shuffle a collection, using the modern version of the
   // [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
+  /*
+  *对类数组的对象进行洗牌
+  **/
   _.shuffle = function(obj) {
     var set = obj && obj.length === +obj.length ? obj : _.values(obj);
     var length = set.length;
@@ -245,6 +288,9 @@
   };
 
   // Sort the object's values by a criterion produced by an iteratee.
+  /*
+  *按照给定的方法进行排序
+  **/
   _.sortBy = function(obj, iteratee, context) {
     iteratee = _.iteratee(iteratee, context);
     return _.pluck(_.map(obj, function(value, index, list) {
@@ -318,6 +364,9 @@
   };
 
   // Return the number of elements in an object.
+  /*
+  *获取一个对象参数的个数
+  **/
   _.size = function(obj) {
     if (obj == null) return 0;
     return obj.length === +obj.length ? obj.length : _.keys(obj).length;
@@ -325,6 +374,9 @@
 
   // Split a collection into two arrays: one whose elements all satisfy the given
   // predicate, and one whose elements all do not satisfy the predicate.
+  /*
+  *吧一个对象的属性按照给定的方法进行分区
+  */
   _.partition = function(obj, predicate, context) {
     predicate = _.iteratee(predicate, context);
     var pass = [], fail = [];

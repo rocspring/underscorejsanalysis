@@ -1,4 +1,7 @@
  // Add a "chain" function. Start chaining a wrapped Underscore object.
+ /*
+ *支持underscore对象的链式操作
+ **/
   _.chain = function(obj) {
     var instance = _(obj);
     instance._chain = true;
@@ -12,11 +15,17 @@
   // underscore functions. Wrapped objects may be chained.
 
   // Helper function to continue chaining intermediate results.
+  /*
+  *
+  **/
   var result = function(obj) {
     return this._chain ? _(obj).chain() : obj;
   };
 
   // Add your own custom functions to the Underscore object.
+  /*
+  *
+  **/
   _.mixin = function(obj) {
     _.each(_.functions(obj), function(name) {
       var func = _[name] = obj[name];
@@ -32,6 +41,9 @@
   _.mixin(_);
 
   // Add all mutator Array functions to the wrapper.
+  /*
+  *
+  **/
   _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
     var method = ArrayProto[name];
     _.prototype[name] = function() {
@@ -43,6 +55,9 @@
   });
 
   // Add all accessor Array functions to the wrapper.
+/*
+*
+**/
   _.each(['concat', 'join', 'slice'], function(name) {
     var method = ArrayProto[name];
     _.prototype[name] = function() {

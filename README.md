@@ -13,6 +13,16 @@ underscore地址：https://github.com/jashkenas/underscore
 
 object增加方法的分析
 
+* array.js
+
+array增加方法的分析
+
+* function.js
+
+function增加方法的分析
+
+* chainling.js
+
 
 
 
